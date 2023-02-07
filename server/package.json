@@ -4,7 +4,8 @@
     "description": "",
     "main": "src/app.ts",
     "scripts": {
-        "start:dev": "nodemon ./src/app.ts"
+        "start:dev": "nodemon ./src/app.ts",
+        "db:dev:seed": "ts-node ./dev/seed.db.ts"
     },
     "author": "",
     "license": "ISC",
