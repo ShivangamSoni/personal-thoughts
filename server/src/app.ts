@@ -1,9 +1,14 @@
-import express from "express";
+import { config } from "dotenv";
+config();
 
 import path from "node:path";
 
-const app = express();
+import express from "express";
 
+const app = express();
 app.use(express.static(path.join(__dirname, "..", "..", "client", "dist")));
 
-app.listen();
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+    console.log(`Server Started at: ${PORT}`);
+});
