@@ -4,6 +4,7 @@ config();
 import path from "node:path";
 
 import express from "express";
+import "./utils/db";
 
 const app = express();
 app.use(express.static(path.join(__dirname, "..", "..", "client", "dist")));
