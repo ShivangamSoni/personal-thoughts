@@ -4,15 +4,17 @@ config();
 import path from "node:path";
 
 import express from "express";
+import passport from "passport";
 
 import { apiRouter } from "./routes/api";
-import { sessionMiddleware } from "./utils/session";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(sessionMiddleware);
+// Passport
+import "./utils/passport";
+app.use(passport.initialize());
 
 app.use(express.static(path.join(__dirname, "..", "..", "client", "dist")));
 
