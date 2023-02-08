@@ -1,7 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 
-import User from "../models/User";
+import User, { IUserDocument } from "../models/User";
 
 const router = Router();
 
@@ -9,7 +9,7 @@ router.get(
     "/",
     passport.authenticate("jwt", { session: false }),
     (req, res) => {
-        const user = req.user as any;
+        const user = req.user as IUserDocument;
         res.send({
             name: user.name,
             email: user.email,
@@ -22,7 +22,7 @@ router.post(
     "/membership/join",
     passport.authenticate("jwt", { session: false }),
     async (req, res) => {
-        const id = (req.user as any).id;
+        const id = (req.user as IUserDocument).id;
         const { code } = req.body;
 
         if (!code || code.trim() === 0 || code !== "The Odin Project") {
@@ -44,7 +44,7 @@ router.post(
     "/membership/leave",
     passport.authenticate("jwt", { session: false }),
     async (req, res) => {
-        const id = (req.user as any).id;
+        const id = (req.user as IUserDocument).id;
 
         try {
             const user = await User.findByIdAndUpdate(id, {

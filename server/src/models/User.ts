@@ -1,12 +1,24 @@
-import { Schema, model } from "mongoose";
+import { Document, Schema, model } from "mongoose";
+
+export interface IUserDocument extends Document {
+    first_name: string;
+    last_name: string;
+    email: string;
+    hash: string;
+    salt: string;
+    membership: boolean;
+    admin: boolean;
+    // Virtual
+    name: string;
+}
 
 const UserSchema = new Schema(
     {
-        first_name: { type: String, require: true },
-        last_name: { type: String, require: true },
+        first_name: { type: String, required: true },
+        last_name: { type: String, required: true },
         email: {
             type: String,
-            require: true,
+            required: true,
             unique: true,
         },
         hash: { type: String, required: true },
@@ -15,13 +27,6 @@ const UserSchema = new Schema(
         admin: { type: Boolean, required: true, default: false },
     },
     {
-        virtuals: {
-            name: {
-                get() {
-                    return `${this.first_name} ${this.last_name}`;
-                },
-            },
-        },
         timestamps: {
             updatedAt: false,
         },
@@ -34,4 +39,9 @@ UserSchema.path("email").validate(async function (value, done) {
     return count === 0;
 }, "Email already exist");
 
-export default model("User", UserSchema);
+// Virtual Property: name
+UserSchema.virtual("name").get(function () {
+    return `${this.first_name} ${this.last_name}`;
+});
+
+export default model<IUserDocument>("User", UserSchema);

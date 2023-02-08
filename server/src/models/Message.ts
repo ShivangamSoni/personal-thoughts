@@ -1,10 +1,17 @@
-import { Schema, model } from "mongoose";
+import { Document, Schema, model } from "mongoose";
+import { IUserDocument } from "./User";
+
+export interface IMessageDocument extends Document {
+    title: string;
+    message: string;
+    user: IUserDocument["_id"];
+}
 
 const MessageSchema = new Schema(
     {
-        title: { type: String, require: true },
-        message: { type: String, require: true },
-        user: { type: Schema.Types.ObjectId, ref: "User", require: true },
+        title: { type: String, required: true },
+        message: { type: String, required: true },
+        user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     },
     {
         timestamps: {
@@ -13,4 +20,4 @@ const MessageSchema = new Schema(
     },
 );
 
-export default model("Message", MessageSchema);
+export default model<IMessageDocument>("Message", MessageSchema);
