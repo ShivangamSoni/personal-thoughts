@@ -1,4 +1,4 @@
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const UserSchema = new Schema(
     {
@@ -9,6 +9,8 @@ const UserSchema = new Schema(
             require: true,
             unique: true,
         },
+        hash: { type: String, required: true },
+        salt: { type: String, required: true },
         membership: { type: Boolean, required: true, default: false },
         admin: { type: Boolean, required: true, default: false },
     },
