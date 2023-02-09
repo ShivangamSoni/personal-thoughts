@@ -1,7 +1,9 @@
+import Header from "./components/Header";
+
 export function App() {
     return (
-        <>
-            <h1 class="text-lg text-blue-500">Hi</h1>
-        </>
+        <main className="h-screen bg-slate-800">
+            <Header />
+        </main>
     );
 }
