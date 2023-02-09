@@ -4,18 +4,23 @@
     "description": "",
     "main": "src/app.ts",
     "scripts": {
-        "start:dev": "nodemon ./src/app.ts"
+        "start:dev": "nodemon ./src/app.ts",
+        "db:dev:seed": "ts-node ./dev/seed.db.ts"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "@types/express": "^4.17.17",
+        "@types/jsonwebtoken": "^9.0.1",
         "@types/node": "^18.13.0",
         "nodemon": "^2.0.20",
         "ts-node": "^10.9.1",
         "typescript": "^4.9.5"
     },
     "dependencies": {
-        "express": "^4.18.2"
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "jsonwebtoken": "^9.0.0",
+        "mongoose": "^6.9.1"
     }
 }
