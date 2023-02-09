@@ -1,13 +1,12 @@
+// import { JWT } from "../../src/middleware/authJWT";
 import { IUserDocument } from "../../src/models/User";
 
 declare global {
     namespace Express {
+        interface User extends IUserDocument {}
+
         interface Request {
-            jwt: JWT | null;
+            user: User | undefined;
         }
     }
-}
-
-interface JWT extends Pick<IUserDocument, "membership" | "admin"> {
-    sub: IUserDocument["_id"];
 }

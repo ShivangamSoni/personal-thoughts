@@ -1,58 +1,42 @@
 import { Router } from "express";
-import passport from "passport";
 
-import User, { IUserDocument } from "../models/User";
+import User from "../models/User";
+import { requireAuth } from "../middleware/authJWT";
 
 const router = Router();
 
-router.get(
-    "/",
-    passport.authenticate("jwt", { session: false }),
-    (req, res) => {
-        const user = req.user as IUserDocument;
-        res.send({
-            name: user.name,
-            email: user.email,
-            membership: user.membership,
-        });
-    },
-);
+router.get("/", requireAuth, (req, res) => {
+    const user = req.user!;
+    res.send({
+        name: user.name,
+        email: user.email,
+        membership: user.membership,
+    });
+});
 
-router.post(
-    "/membership/join",
-    passport.authenticate("jwt", { session: false }),
-    async (req, res) => {
-        const id = (req.user as IUserDocument).id;
-        const { code } = req.body;
+router.post("/membership/join", requireAuth, async (req, res) => {
+    const id = req.user!.id;
+    const { code } = req.body;
 
-        if (!code || code.trim() === 0 || code !== "The Odin Project") {
-            return res
-                .status(400)
-                .send({ success: false, message: "Invalid Join Code" });
-        }
+    if (!code || code.trim() === 0 || code !== "The Odin Project") {
+        return res
+            .status(400)
+            .send({ success: false, message: "Invalid Join Code" });
+    }
 
-        try {
-            const user = await User.findByIdAndUpdate(id, {
-                membership: true,
-            });
-            res.status(201).end();
-        } catch {}
-    },
-);
+    await User.findByIdAndUpdate(id, {
+        membership: true,
+    });
+    res.status(201).send({ message: "Membership Granted" });
+});
 
-router.post(
-    "/membership/leave",
-    passport.authenticate("jwt", { session: false }),
-    async (req, res) => {
-        const id = (req.user as IUserDocument).id;
+router.post("/membership/leave", requireAuth, async (req, res) => {
+    const id = req.user!.id;
 
-        try {
-            const user = await User.findByIdAndUpdate(id, {
-                membership: false,
-            });
-            res.status(201).end();
-        } catch {}
-    },
-);
+    await User.findByIdAndUpdate(id, {
+        membership: false,
+    });
+    res.status(201).send({ message: "Membership Revoked" });
+});
 
 export const userRouter = router;
