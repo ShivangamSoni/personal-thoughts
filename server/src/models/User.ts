@@ -1,6 +1,6 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, SchemaTimestampsConfig, model } from "mongoose";
 
-export interface IUserDocument extends Document {
+export interface IUserDocument extends Document, SchemaTimestampsConfig {
     first_name: string;
     last_name: string;
     email: string;
