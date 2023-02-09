@@ -1,12 +1,13 @@
 import { Router } from "express";
 
-import { requireAuth } from "../middleware/authJWT";
+import { RequestWithUser, requireAuth } from "../middleware/authJWT";
 import Message from "../models/Message";
 import { IUserDocument } from "../models/User";
 
 const router = Router();
 
-router.get("/", requireAuth, async (req, res) => {
+// @ts-expect-error
+router.get("/", requireAuth, async (req: RequestWithUser, res) => {
     const user = req.user;
 
     const showUser = user && user.membership;
@@ -54,7 +55,8 @@ router.get("/", requireAuth, async (req, res) => {
     }
 });
 
-router.post("/", requireAuth, async (req, res) => {
+// @ts-expect-error
+router.post("/", requireAuth, async (req: RequestWithUser, res) => {
     const { id } = req.user!;
     const { title, message } = req.body;
 

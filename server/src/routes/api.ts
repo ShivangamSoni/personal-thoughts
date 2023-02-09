@@ -1,4 +1,4 @@
-import { ErrorRequestHandler, Router } from "express";
+import { ErrorRequestHandler, RequestHandler, Router } from "express";
 
 import { authRouter } from "./auth";
 import { userRouter } from "./user";
@@ -7,6 +7,7 @@ import { extractJWT } from "../middleware/authJWT";
 
 const router = Router();
 
+// @ts-expect-error
 router.use(extractJWT);
 
 router.use("/auth", authRouter);

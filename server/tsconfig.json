@@ -1,14 +1,16 @@
 {
+    "exclude": ["./dev"],
+    "include": ["./src"],
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
         "lib": ["es6"],
+        "rootDir": "./src",
+        "outDir": "./dist",
         "allowJs": true,
-        "outDir": "build",
         "strict": true,
         "noImplicitAny": true,
         "esModuleInterop": true,
-        "resolveJsonModule": true,
-        "typeRoots": ["./@types", "./node_modules/@types"]
+        "resolveJsonModule": true
     }
 }
