@@ -37,7 +37,10 @@ router.post("/register", async (req, res, next) => {
         }).save();
         res.status(201).send({ message: "Registered" });
     } catch (e) {
-        res.send({ success: false, message: "Invalid Email or Password" });
+        res.status(400).send({
+            success: false,
+            message: "Email already Registered",
+        });
     }
 });
 

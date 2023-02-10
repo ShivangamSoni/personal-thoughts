@@ -1,23 +1,11 @@
 import { useQuery } from "react-query";
-import { AxiosError } from "axios";
-import axios from "../axios";
 
 import { Spinner } from "./Spinner";
-import Thought, { IThought } from "./Thought";
+import Thought from "./Thought";
+import { GET_THOUGHTS } from "../Query";
 
 export default function ThoughtBoard() {
-  const {
-    isLoading,
-    data: messages,
-    isError,
-    error,
-  } = useQuery<IThought[], AxiosError<{ message: string }>>(
-    "messages",
-    async () => {
-      return (await axios.get("/api/messages")).data.messages;
-    }
-  );
-
+  const { isLoading, data: messages, isError, error } = useQuery(GET_THOUGHTS);
   if (isError) {
     return <h2>{error!.response?.data.message || error!.message}</h2>;
   }

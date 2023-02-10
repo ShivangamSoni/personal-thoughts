@@ -22,7 +22,7 @@ router.get("/", async (req: RequestWithUser, res) => {
             },
         )
             .sort({
-                createdAt: 1,
+                createdAt: -1,
             })
             .populate<{ user: IUserDocument }>("user");
 
@@ -45,7 +45,7 @@ router.get("/", async (req: RequestWithUser, res) => {
                 message: 1,
             },
         ).sort({
-            createdAt: 1,
+            createdAt: -1,
         });
 
         messagesData = messages.map((message) => {
