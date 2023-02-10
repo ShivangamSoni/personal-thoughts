@@ -25,7 +25,10 @@ const AuthContext = createContext<{
     error: string;
   };
   logout: () => void;
-  join: () => void;
+  join: {
+    mutate: (code: string) => AxiosResponse;
+    error: string;
+  };
 }>({
   user: null,
   login: {
@@ -34,7 +37,11 @@ const AuthContext = createContext<{
     error: "",
   },
   logout: () => {},
-  join: () => {},
+  join: {
+    // @ts-expect-error
+    mutate: () => {},
+    error: "",
+  },
 });
 
 export default function AuthProvider({
@@ -55,11 +62,11 @@ export default function AuthProvider({
     },
   });
 
-  const { mutate: joinMutate } = useMutation({
-    mutationFn: () => {
+  const { mutateAsync: joinMutate, error: joinError } = useMutation({
+    mutationFn: (code: string) => {
       return axios.post(
         "/api/user/membership/join",
-        {},
+        { code },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -100,8 +107,6 @@ export default function AuthProvider({
     setToken("");
   }
 
-  function join() {}
-
   useEffect(() => {
     refetch();
     client.invalidateQueries("thoughts", {
@@ -121,7 +126,12 @@ export default function AuthProvider({
           error: error ? error.response.data.message : "",
         },
         logout,
-        join: joinMutate,
+        join: {
+          // @ts-expect-error
+          mutate: joinMutate,
+          // @ts-expect-error
+          error: joinError ? joinError.response.data.message : "",
+        },
       }}
     >
       {children}

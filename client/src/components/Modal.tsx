@@ -13,7 +13,7 @@ export default function Modal({
   return isOpen
     ? createPortal(
         <div
-          className="fixed inset-0 flex items-center justify-center backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm"
           onClick={(e) => {
             if (e.currentTarget.isSameNode(e.target as Node)) {
               onClose();
