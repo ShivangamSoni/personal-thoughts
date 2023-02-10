@@ -31,7 +31,7 @@ router.post("/register", async (req, res, next) => {
         const user = await new User({
             first_name,
             last_name,
-            email,
+            email: email.toLowerCase(),
             hash,
             salt,
         }).save();
@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email: email.toLowerCase() });
 
         if (!user) {
             return res.status(400).send({

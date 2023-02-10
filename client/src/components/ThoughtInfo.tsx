@@ -11,9 +11,6 @@ export default function ThoughtInfo({
   createdAt,
   user,
 }: Omit<IThought, "title" | "message">) {
-  if (!user) {
-  }
-
   return (
     <div className="absolute top-1 right-1 rounded-full bg-indigo-100 py-1 px-3 text-sm font-semibold">
       {!user || !createdAt ? (

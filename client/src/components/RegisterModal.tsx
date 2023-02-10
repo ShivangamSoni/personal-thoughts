@@ -74,7 +74,7 @@ export default function RegisterModal({
         />
         <Form.Field
           label="Password"
-          inputProps={register("password")}
+          inputProps={{ ...register("password"), type: "password" }}
           error={errors.password?.message || ""}
         />
         <Form.Actions>
