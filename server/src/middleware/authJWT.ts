@@ -18,7 +18,7 @@ export async function extractJWT(
     }
 
     const [bearer, token] = authorize.split(" ");
-    if (bearer !== "Bearer") {
+    if (bearer !== "Bearer" || !token || token == "null") {
         return next();
     }
 

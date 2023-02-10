@@ -7,11 +7,11 @@ import { IUserDocument } from "../models/User";
 const router = Router();
 
 // @ts-expect-error
-router.get("/", requireAuth, async (req: RequestWithUser, res) => {
+router.get("/", async (req: RequestWithUser, res) => {
     const user = req.user;
 
     const showUser = user && user.membership;
-
+    let messagesData;
     if (showUser) {
         const messages = await Message.find(
             {},
@@ -19,16 +19,16 @@ router.get("/", requireAuth, async (req: RequestWithUser, res) => {
                 title: 1,
                 message: 1,
                 createdAt: 1,
-                _id: 0,
             },
         )
             .sort({
-                createdAt: 1,
+                createdAt: -1,
             })
             .populate<{ user: IUserDocument }>("user");
 
-        const messagesData = messages.map((message) => {
+        messagesData = messages.map((message) => {
             return {
+                id: message.id,
                 title: message.title,
                 message: message.message,
                 createdAt: message.createdAt,
@@ -37,22 +37,27 @@ router.get("/", requireAuth, async (req: RequestWithUser, res) => {
                 },
             };
         });
-
-        res.send({ type: "message", messages: messagesData });
     } else {
         const messages = await Message.find(
             {},
             {
                 title: 1,
                 message: 1,
-                _id: 0,
             },
         ).sort({
-            createdAt: 1,
+            createdAt: -1,
         });
 
-        res.send({ type: "message", messages });
+        messagesData = messages.map((message) => {
+            return {
+                id: message.id,
+                title: message.title,
+                message: message.message,
+            };
+        });
     }
+
+    res.send({ type: "message", messages: messagesData });
 });
 
 // @ts-expect-error

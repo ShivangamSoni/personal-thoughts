@@ -1,0 +1,23 @@
+{
+    "name": "members-only",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "private": true,
+    "scripts": {
+        "start": "npm run build:client && npm run server:start",
+        "build:client": "cd ./client && npm run build",
+        "server:start": "cd ./server && npm run start"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ShivangamSoni/members-only.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ShivangamSoni/members-only/issues"
+    },
+    "homepage": "https://github.com/ShivangamSoni/members-only#readme"
+}

@@ -1,32 +1,21 @@
-import { useState } from 'preact/hooks'
-import preactLogo from './assets/preact.svg'
-import './app.css'
+import { useAuthCtx } from "./Context/AuthContext";
+import Header from "./components/Header";
+import NewThought from "./components/NewThought";
+import ThoughtBoard from "./components/ThoughtBoard";
+import ThoughtBoardLayout from "./layout/ThoughtBoardLayout";
 
 export function App() {
-  const [count, setCount] = useState(0)
+  const { user } = useAuthCtx();
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://preactjs.com" target="_blank">
-          <img src={preactLogo} class="logo preact" alt="Preact logo" />
-        </a>
-      </div>
-      <h1>Vite + Preact</h1>
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/app.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p class="read-the-docs">
-        Click on the Vite and Preact logos to learn more
-      </p>
-    </>
-  )
+    <div className="grid h-screen grid-rows-[auto,1fr] gap-8 overflow-hidden bg-slate-800 py-8">
+      <Header />
+      <main className="overflow-auto">
+        <ThoughtBoardLayout>
+          <ThoughtBoard />
+        </ThoughtBoardLayout>
+        {user && <NewThought />}
+      </main>
+    </div>
+  );
 }
