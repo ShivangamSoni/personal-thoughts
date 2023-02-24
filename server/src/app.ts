@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, "..", "..", "client", "dist")));
 
 app.use("/api", apiRouter);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
     console.log(`Server Started at: ${PORT}`);
 });

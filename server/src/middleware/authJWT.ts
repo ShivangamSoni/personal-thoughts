@@ -22,7 +22,13 @@ export async function extractJWT(
         return next();
     }
 
-    const payload = verify(token, process.env.JWT_KEY!);
+    let payload;
+    try {
+        payload = verify(token, process.env.JWT_KEY!);
+    } catch {
+        return next();
+    }
+
     const user = await User.findById(payload.sub);
     if (!user) {
         return next();

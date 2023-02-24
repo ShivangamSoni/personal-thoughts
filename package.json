@@ -5,9 +5,13 @@
     "main": "index.js",
     "private": true,
     "scripts": {
-        "start": "npm run build:client && npm run server:start",
-        "build:client": "cd ./client && npm run build",
-        "server:start": "cd ./server && npm run start"
+        "start": "cd ./server && npm run start",
+        "install": "npm run client:install && npm run server:install",
+        "build": "npm run client:build && npm run server:build",
+        "client:build": "cd ./client && npm run build",
+        "server:build": "cd ./server && npm run build",
+        "client:install": "cd ./client && npm install",
+        "server:install": "cd ./server && npm install"
     },
     "repository": {
         "type": "git",
