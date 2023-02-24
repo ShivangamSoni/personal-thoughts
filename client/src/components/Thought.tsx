@@ -16,7 +16,9 @@ export default function Thought({ title, message, ...info }: IThought) {
       <h2 className="text-xl font-bold underline decoration-double underline-offset-2">
         {title}
       </h2>
-      <p className="mt-3 text-justify text-base leading-loose">{message}</p>
+      <p className="mt-3 whitespace-pre-line text-justify text-base leading-loose">
+        {message}
+      </p>
       <ThoughtInfo {...info} />
     </div>
   );
